@@ -28,6 +28,7 @@ import {
   resolveAllowances,
   type SessionAllowances,
   supportsNodeEnvProxy,
+  clearSessionAllowances,
 } from "./sandbox-runtime.ts";
 import {
   cancelPermissionPrompts,
@@ -167,6 +168,7 @@ export default function (pi: ExtensionAPI) {
     }
     sandboxEnabled = false;
     sandboxInitialized = false;
+    clearSessionAllowances(allowances);
     ctx.ui.setStatus("sandbox", "");
     return true;
   }

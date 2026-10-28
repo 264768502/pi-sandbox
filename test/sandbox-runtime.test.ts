@@ -12,6 +12,7 @@ import { DEFAULT_CONFIG, mergeConfigLayers } from "../src/config.ts";
 import { canonicalizePath } from "../src/policy.ts";
 import {
   buildRuntimeConfig,
+  clearSessionAllowances,
   createSandboxedBashOps,
   resolveAllowances,
   supportsNodeEnvProxy,
@@ -414,4 +415,15 @@ test("network.disabled omits allowedDomains so the runtime skips network isolati
   // Default (not disabled) still emits the allowlist.
   const normal = buildRuntimeConfig(DEFAULT_CONFIG);
   assert.equal(Array.isArray(normal.network?.allowedDomains), true);
+});
+
+test("clearSessionAllowances empties the grant lists in place", () => {
+  const allowances = { domains: ["a.com"], readPaths: ["/r"], writePaths: ["/w"] };
+  const { domains, readPaths, writePaths } = allowances;
+  clearSessionAllowances(allowances);
+  assert.deepEqual(allowances, { domains: [], readPaths: [], writePaths: [] });
+  // Same arrays: closures holding them see the cleared state.
+  assert.equal(allowances.domains, domains);
+  assert.equal(allowances.readPaths, readPaths);
+  assert.equal(allowances.writePaths, writePaths);
 });

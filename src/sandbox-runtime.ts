@@ -169,6 +169,13 @@ export function supportsNodeEnvProxy(version: string): boolean {
   return (major === 22 && minor >= 21) || major >= 24;
 }
 
+/** Drop session-only grants in place, so a later re-enable starts clean. */
+export function clearSessionAllowances(allowances: SessionAllowances): void {
+  allowances.domains.length = 0;
+  allowances.readPaths.length = 0;
+  allowances.writePaths.length = 0;
+}
+
 const EXIT_STDIO_GRACE_MS = 100;
 
 /**
