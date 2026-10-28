@@ -29,6 +29,7 @@ import {
   resolveAllowances,
   type SessionAllowances,
   supportsNodeEnvProxy,
+  supportsSandboxPlatform,
   clearSessionAllowances,
 } from "./sandbox-runtime.ts";
 import {
@@ -124,7 +125,7 @@ export default function (pi: ExtensionAPI) {
 
     const config = loadConfig(ctx.cwd, projectTrusted);
     const platform = process.platform;
-    if (platform !== "darwin" && platform !== "linux") {
+    if (!supportsSandboxPlatform(platform)) {
       ctx.ui.notify(`Sandbox not supported on ${platform}`, "warning");
       return false;
     }

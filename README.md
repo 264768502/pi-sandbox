@@ -48,6 +48,10 @@ Install ripgrep before enabling the extension:
 | Linux (Arch) | `sudo pacman -S ripgrep` |
 | From source / other | <https://github.com/BurntSushi/ripgrep#installation> |
 
+Experimental Android/Termux support uses the Linux backend and requires `ripgrep`,
+`which`, `socat`, and a [compatible `bwrap`](https://gist.github.com/spurreiter/caa34d367b7ebbd82806a640bf41157a).
+Support depends on the device's kernel and isolation capabilities.
+
 If `which rg` succeeds in your shell but pi still reports `rg not
 found`, pi is being launched from a parent process whose `PATH` does
 not include the directory containing `rg` (common when GUI launchers
